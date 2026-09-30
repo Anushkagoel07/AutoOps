@@ -1,30 +1,59 @@
-# 🤖 AutoOps
+<div align="center">
 
-### **AI that reads. Thinks. Decides. Acts.**
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:6366F1,50:8B5CF6,100:EC4899&height=230&section=header&text=AutoOps&fontSize=72&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=AI%20that%20reads.%20Thinks.%20Decides.%20Acts.&descAlignY=60&descSize=20" alt="AutoOps banner" width="100%"/>
 
-AutoOps is an **AI-powered autonomous operations platform** designed to automate customer support and sales workflows.
+<a href="https://github.com/Anushkagoel07/AutoOps">
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&pause=1200&color=8B5CF6&center=true&vCenter=true&width=700&lines=Resolve+%E2%9C%85+%7C+Follow+Up+%F0%9F%93%A9+%7C+Escalate+%F0%9F%9A%A8+%7C+Reject+%F0%9F%97%91%EF%B8%8F;Autonomous+support+%26+sales+operations;Humans+stay+in+the+loop+for+risky+cases" alt="Typing animation"/>
+</a>
 
-Instead of simply generating replies, AutoOps understands incoming requests, classifies them, evaluates their priority and confidence, and decides what should happen next — **resolve, follow up, escalate, or reject.**
+<br/>
 
-> **Less manual work. Faster decisions. Smarter operations.**
+![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![Groq](https://img.shields.io/badge/Groq-F55036?style=for-the-badge&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
+
+![Status](https://img.shields.io/badge/status-hackathon_project-EC4899?style=flat-square)
+![AI](https://img.shields.io/badge/AI-autonomous_agent-8B5CF6?style=flat-square)
+![Human in the loop](https://img.shields.io/badge/human-in_the_loop-10B981?style=flat-square)
+
+### 🤖 **Less manual work. Faster decisions. Smarter operations.**
+
+[🚀 Quick Start](#-getting-started) •
+[✨ Features](#-core-features) •
+[🎯 Demo](#-demo-scenarios) •
+[📊 Dashboard](#-dashboard) •
+[🔌 API](#-api-routes)
+
+</div>
 
 ---
 
 ## 🚀 What is AutoOps?
 
-Businesses receive hundreds of support requests and sales inquiries that require repetitive manual processing.
+Businesses receive hundreds of support requests and sales inquiries that need repetitive manual processing.
 
-AutoOps introduces an AI agent that can:
+**AutoOps** is an **AI-powered autonomous operations platform** that does more than generate replies. It understands each incoming request, classifies it, evaluates priority and confidence, and then **decides what should happen next**: resolve, follow up, escalate, or reject.
 
-* 🧠 Understand incoming requests
-* 🏷️ Classify support and sales intent
-* ⚡ Determine priority
-* 🎯 Calculate AI confidence
-* 🤝 Decide the next action
-* 💬 Generate appropriate responses
-* 🚨 Escalate sensitive or uncertain cases
-* 📈 Track leads and operational activity
-* 📊 Provide AI-powered analytics
+<table>
+<tr>
+<td>🧠 Understand requests</td>
+<td>🏷️ Classify support & sales intent</td>
+<td>⚡ Determine priority</td>
+</tr>
+<tr>
+<td>🎯 Calculate AI confidence</td>
+<td>🤝 Decide the next action</td>
+<td>💬 Generate responses</td>
+</tr>
+<tr>
+<td>🚨 Escalate risky cases</td>
+<td>📈 Track leads & activity</td>
+<td>📊 AI-powered analytics</td>
+</tr>
+</table>
 
 ---
 
@@ -32,171 +61,140 @@ AutoOps introduces an AI agent that can:
 
 ### 🧠 Autonomous AI Agent
 
-Every incoming request is analyzed using structured AI reasoning.
+Every request is analyzed with structured AI reasoning. The agent produces:
 
-The agent determines:
-
-| Field      | Description                                              |
-| ---------- | -------------------------------------------------------- |
-| Category   | Billing, Technical, Account, General, Spam, Sales Intent |
-| Priority   | Low, Medium, High, Critical                              |
-| Confidence | AI confidence score                                      |
-| Decision   | Resolve, Follow Up, Escalate, Reject                     |
-| Reason     | Explainable reasoning                                    |
-| Action     | Action taken by the system                               |
-
----
+| 🔑 Field | 📝 Description |
+| :-- | :-- |
+| 🏷️ **Category** | Billing, Technical, Account, General, Spam, Sales Intent |
+| ⚡ **Priority** | 🟢 Low · 🟡 Medium · 🟠 High · 🔴 Critical |
+| 🎯 **Confidence** | AI confidence score |
+| 🤝 **Decision** | Resolve, Follow Up, Escalate, Reject |
+| 💡 **Reason** | Explainable reasoning behind the decision |
+| ⚙️ **Action** | The action taken by the system |
 
 ### ⚡ Intelligent Decisions
 
-AutoOps can automatically:
-
-**✅ Auto Resolve**
-Handle simple, low-risk support questions.
-
-**📩 Follow Up**
-Identify genuine sales opportunities and initiate a simulated follow-up.
-
-**🚨 Escalate**
-Route sensitive, uncertain, or high-risk requests to a human.
-
-**🗑️ Reject**
-Identify and archive obvious spam.
+| | Decision | What happens |
+| :-: | :-- | :-- |
+| ✅ | **Auto Resolve** | Handles simple, low-risk support questions |
+| 📩 | **Follow Up** | Spots genuine sales opportunities and starts a simulated follow-up |
+| 🚨 | **Escalate** | Routes sensitive, uncertain, or high-risk requests to a human |
+| 🗑️ | **Reject** | Identifies and archives obvious spam |
 
 ---
 
 ## 🎯 Demo Scenarios
 
-AutoOps is built around realistic business scenarios:
+AutoOps is built around realistic business situations.
 
-### 💳 Duplicate Billing
-
-> "My card was charged twice for the same subscription."
-
-**Result:**
-`Billing → High → Escalate`
-
----
-
-### 🔐 Password Reset
-
-> "How can I reset my password?"
-
-**Result:**
-`Account → Low → Auto Resolve`
-
----
-
-### 🏢 Enterprise Lead
-
-> "We are a 50-person company looking for your enterprise plan."
-
-**Result:**
-`Qualified Lead → High → Follow Up`
-
----
-
-### 🚫 Spam
-
-> "WIN FREE MONEY!!!"
-
-**Result:**
-`Spam → Low → Reject`
+| | Scenario | Incoming message | Result |
+| :-: | :-- | :-- | :-- |
+| 💳 | **Duplicate Billing** | *"My card was charged twice for the same subscription."* | `Billing` → 🟠 `High` → 🚨 **Escalate** |
+| 🔐 | **Password Reset** | *"How can I reset my password?"* | `Account` → 🟢 `Low` → ✅ **Auto Resolve** |
+| 🏢 | **Enterprise Lead** | *"We are a 50-person company looking for your enterprise plan."* | `Qualified Lead` → 🟠 `High` → 📩 **Follow Up** |
+| 🚫 | **Spam** | *"WIN FREE MONEY!!!"* | `Spam` → 🟢 `Low` → 🗑️ **Reject** |
 
 ---
 
 ## 📊 Dashboard
 
-AutoOps provides an operations dashboard for monitoring AI-driven workflows.
+An operations dashboard for monitoring AI-driven workflows.
 
-### Operations Overview
+**📌 Operations Overview**
 
-* Total requests
-* Pending requests
-* Resolved requests
-* Escalated requests
-* Live activity
-* Decision distribution
-* Human escalation queue
+- 📥 Total requests
+- ⏳ Pending requests
+- ✅ Resolved requests
+- 🚨 Escalated requests
+- 🔴 Live activity feed
+- 🥧 Decision distribution
+- 🧑‍💼 Human escalation queue
 
-### Analytics
+**📈 Analytics**
 
-* Request trends
-* Decision breakdown
-* Operational insights
-* Natural-language analytics
+- 📉 Request trends
+- 🍰 Decision breakdown
+- 🔍 Operational insights
+- 💬 Natural-language analytics
 
 ---
 
 ## 🧠 Ask Neural Pulse
 
-AutoOps includes a natural-language analytics layer powered by **Neural Pulse**.
+A natural-language analytics layer powered by **Neural Pulse**. Instead of manually filtering data, just ask:
 
-Instead of manually filtering data, users can ask questions such as:
+> 💬 **"How many requests were escalated today?"**
+>
+> 💬 **"Which category generates the most support requests?"**
 
-> **"How many requests were escalated today?"**
-
-or
-
-> **"Which category generates the most support requests?"**
-
-The analytics layer converts operational data into useful insights.
+The analytics layer turns operational data into useful insights.
 
 ---
 
 ## 🔄 How AutoOps Works
 
-```text
-             Incoming Request
-                    │
-                    ▼
-              ┌───────────┐
-              │   Intake  │
-              └─────┬─────┘
-                    │
-                    ▼
-             ┌─────────────┐
-             │  AI Agent   │
-             │    Groq     │
-             └──────┬──────┘
-                    │
-        ┌───────────┼───────────┐
-        ▼           ▼           ▼
-     Resolve     Follow Up   Escalate
-        │           │           │
-        └───────────┼───────────┘
-                    │
-                    ▼
-              ┌───────────┐
-              │ Analytics │
-              └───────────┘
+```mermaid
+flowchart TD
+    A([📥 Incoming Request]) --> B[🧾 Intake]
+    B --> C{{🤖 AI Agent<br/>Groq}}
+    C -->|✅ Simple, low risk| D[Resolve]
+    C -->|📩 Sales opportunity| E[Follow Up]
+    C -->|🚨 Risky or uncertain| F[Escalate to Human]
+    C -->|🗑️ Spam| G[Reject]
+    D --> H[(📊 Analytics & Dashboard)]
+    E --> H
+    F --> H
+    G --> H
+
+    style A fill:#6366F1,stroke:#4338CA,color:#fff
+    style B fill:#8B5CF6,stroke:#6D28D9,color:#fff
+    style C fill:#EC4899,stroke:#BE185D,color:#fff
+    style D fill:#10B981,stroke:#047857,color:#fff
+    style E fill:#3B82F6,stroke:#1D4ED8,color:#fff
+    style F fill:#EF4444,stroke:#B91C1C,color:#fff
+    style G fill:#6B7280,stroke:#374151,color:#fff
+    style H fill:#F59E0B,stroke:#B45309,color:#fff
 ```
 
 ---
 
 ## 🛠️ Tech Stack
 
-### Frontend
+<table>
+<tr>
+<td valign="top" width="25%">
 
-* **Next.js**
-* **React**
-* **TypeScript**
-* **Tailwind CSS**
-* **Recharts**
+### 🎨 Frontend
+- **Next.js**
+- **React**
+- **TypeScript**
+- **Tailwind CSS**
+- **Recharts**
 
-### AI
+</td>
+<td valign="top" width="25%">
 
-* **Groq**
-* Function Calling / Structured AI Output
+### 🤖 AI
+- **Groq**
+- Function calling
+- Structured AI output
 
-### Data & Analytics
+</td>
+<td valign="top" width="25%">
 
-* **Neural Pulse**
-* Local JSON storage for the current demo fallback
+### 📊 Data & Analytics
+- **Neural Pulse**
+- Local JSON storage (demo fallback)
 
-### Deployment
+</td>
+<td valign="top" width="25%">
 
-* **Vercel**
+### ☁️ Deployment
+- **Vercel**
+
+</td>
+</tr>
+</table>
 
 ---
 
@@ -205,75 +203,75 @@ The analytics layer converts operational data into useful insights.
 ```text
 AutoOps/
 │
-├── app/
-│   ├── api/
+├── 📁 app/
+│   ├── 📁 api/
 │   │   ├── actions/
 │   │   ├── agent/
 │   │   ├── analytics/
 │   │   └── requests/
 │   │
-│   └── dashboard/
+│   └── 📁 dashboard/
 │       ├── analytics/
 │       ├── escalations/
 │       └── intake/
 │
-├── components/
+├── 📁 components/
 │   ├── AnalyticsCharts
 │   ├── AskNeuralPulse
 │   ├── EscalationQueue
 │   └── LiveActivityFeed
 │
-├── lib/
+├── 📁 lib/
 │   ├── agent/
 │   ├── neuralpulse/
 │   └── store.ts
 │
-├── data/
+├── 📁 data/
 │   └── autoops.json
 │
-├── public/
+├── 📁 public/
 │
-├── AGENTS.md
-├── CLAUDE.md
-├── architecture.md
-├── AutoOps-PRD-v2.md
-└── README.md
+├── 📄 AGENTS.md
+├── 📄 CLAUDE.md
+├── 📄 architecture.md
+├── 📄 AutoOps-PRD-v2.md
+└── 📄 README.md
 ```
 
 ---
 
 ## 🔌 API Routes
 
-| Endpoint                        | Purpose                                  |
-| ------------------------------- | ---------------------------------------- |
-| `POST /api/requests`            | Create a request                         |
-| `POST /api/requests/upload`     | Upload requests through CSV              |
-| `GET /api/requests`             | Fetch requests                           |
-| `POST /api/agent/process/:id`   | Process request with AI                  |
-| `POST /api/actions/:id/execute` | Execute selected action                  |
-| `GET /api/escalations`          | Fetch escalations                        |
-| `PATCH /api/escalations/:id`    | Update escalation                        |
-| `GET /api/analytics/summary`    | Fetch analytics summary                  |
-| `POST /api/analytics/query`     | Ask natural-language analytics questions |
+| Method | Endpoint | Purpose |
+| :-: | :-- | :-- |
+| ![POST](https://img.shields.io/badge/POST-10B981?style=flat-square) | `/api/requests` | Create a request |
+| ![POST](https://img.shields.io/badge/POST-10B981?style=flat-square) | `/api/requests/upload` | Upload requests through CSV |
+| ![GET](https://img.shields.io/badge/GET-3B82F6?style=flat-square) | `/api/requests` | Fetch requests |
+| ![POST](https://img.shields.io/badge/POST-10B981?style=flat-square) | `/api/agent/process/:id` | Process a request with AI |
+| ![POST](https://img.shields.io/badge/POST-10B981?style=flat-square) | `/api/actions/:id/execute` | Execute the selected action |
+| ![GET](https://img.shields.io/badge/GET-3B82F6?style=flat-square) | `/api/escalations` | Fetch escalations |
+| ![PATCH](https://img.shields.io/badge/PATCH-F59E0B?style=flat-square) | `/api/escalations/:id` | Update an escalation |
+| ![GET](https://img.shields.io/badge/GET-3B82F6?style=flat-square) | `/api/analytics/summary` | Fetch analytics summary |
+| ![POST](https://img.shields.io/badge/POST-10B981?style=flat-square) | `/api/analytics/query` | Ask natural-language analytics questions |
 
 ---
 
 ## ⚙️ Getting Started
 
-### 1. Clone the repository
+**1️⃣ Clone the repository**
 
 ```bash
 git clone https://github.com/Anushkagoel07/AutoOps.git
 cd AutoOps
 ```
 
-### 2. Install dependencies
+**2️⃣ Install dependencies**
 
 ```bash
 npm install
 ```
 
-### 3. Configure environment variables
+**3️⃣ Configure environment variables**
 
 Create a `.env.local` file:
 
@@ -283,90 +281,84 @@ NEURAL_PULSE_API_KEY=your_neural_pulse_api_key
 NEURAL_PULSE_BASE_URL=your_neural_pulse_base_url
 ```
 
-### 4. Run the development server
+**4️⃣ Run the development server**
 
 ```bash
 npm run dev
 ```
 
-Open:
+Then open 👉 **http://localhost:3000**
 
-```text
-http://localhost:3000
-```
-
----
-
-## 🔐 Security
-
-API keys should be stored only in environment variables.
-
-Do **not** commit `.env.local` or expose API keys in client-side code.
+> [!WARNING]
+> 🔐 Keep API keys only in environment variables. Never commit `.env.local` or expose keys in client-side code.
 
 ---
 
 ## 🧪 Testing the Demo
 
-Try these four requests:
+Paste these four requests into the intake page:
 
 ```text
 1. My card was charged twice for the same subscription.
-
 2. How can I reset my password?
-
 3. We are a 50-person company looking for your enterprise plan.
-
 4. WIN FREE MONEY!!!
 ```
 
-Then open the dashboard and observe how the AI processes each request.
+Then open the dashboard and watch the AI process each one. 🎬
 
 ---
 
 ## 🎯 Project Goals
 
-AutoOps focuses on demonstrating how AI can move beyond simple chatbot interactions into **autonomous operational decision-making**.
+AutoOps shows how AI can move beyond simple chatbots into **autonomous operational decision-making**.
 
-The system combines:
+<div align="center">
 
-**LLM Reasoning + Structured Decisions + Automated Actions + Human Escalation + Analytics**
+**🧠 LLM Reasoning** &nbsp;+&nbsp; **🎯 Structured Decisions** &nbsp;+&nbsp; **⚙️ Automated Actions** &nbsp;+&nbsp; **🧑‍💼 Human Escalation** &nbsp;+&nbsp; **📊 Analytics**
 
-to create an end-to-end AI operations workflow.
+⬇️
+
+**One end-to-end AI operations workflow**
+
+</div>
 
 ---
 
 ## 🔮 Future Scope
 
-Potential future extensions include:
-
-* Real email integration
-* CRM integrations
-* Slack / Teams notifications
-* Multi-tenant workspaces
-* Advanced lead scoring
-* Human-in-the-loop workflows
-* More AI agents for specialized operations
-* Production-grade persistent data infrastructure
-* Advanced analytics and reporting
+- [ ] 📧 Real email integration
+- [ ] 🔗 CRM integrations
+- [ ] 💬 Slack / Teams notifications
+- [ ] 🏢 Multi-tenant workspaces
+- [ ] 🎯 Advanced lead scoring
+- [ ] 🧑‍💼 Human-in-the-loop workflows
+- [ ] 🤖 More specialized AI agents
+- [ ] 🗄️ Production-grade persistent data infrastructure
+- [ ] 📈 Advanced analytics and reporting
 
 ---
 
 ## 🏆 Hackathon Project
 
-AutoOps was built as an AI-first automation platform demonstrating how autonomous agents can handle repetitive **support and sales operations** while keeping humans in the loop for sensitive decisions.
-
-### **AI that doesn't just answer — it takes action.** 🚀
+AutoOps was built as an AI-first automation platform that shows how autonomous agents can handle repetitive **support and sales operations**, while keeping humans in the loop for sensitive decisions.
 
 ---
+
+<div align="center">
 
 ## 👩‍💻 Author
 
 **Anushka Goel**
 
-GitHub: [@Anushkagoel07](https://github.com/Anushkagoel07)
+[![GitHub](https://img.shields.io/badge/GitHub-@Anushkagoel07-181717?style=for-the-badge&logo=github)](https://github.com/Anushkagoel07)
 
----
+<br/>
 
-## ⭐ If you like the project
+### ⭐ If you like the project, give it a star!
 
-Give the repository a ⭐ and feel free to explore the code!
+**AI that doesn't just answer — it takes action.** 🚀
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:EC4899,50:8B5CF6,100:6366F1&height=120&section=footer" alt="footer" width="100%"/>
+
+</div>
