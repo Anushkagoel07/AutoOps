@@ -1,23 +1,24 @@
 import { NextResponse } from "next/server";
-import { getRequest, updateRequest, addAgentActivity, addEscalation } from "@/lib/store";
-import { processAgentRequest } from "@/lib/agent/agent";
-import { executeAction } from "@/lib/agent/actions";
 
-type Params = {
-  params: Promise<{ id: string }>;
-};
+import { processAgentRequest } from "@/lib/agent/agent";
+import {
+  addAgentActivity,
+  addEscalation,
+  addLead,
+  getRequest,
+  updateRequest,
+} from "@/lib/store";
 
 export async function POST(
-  _request: Request,
-  { params }: Params
+  _req: Request,
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { id } = await params;
 
-    // 1. Get request
-    const requestData = getRequest(id);
+    const request = getRequest(id);
 
-    if (!requestData) {
+    if (!request) {
       return NextResponse.json(
         {
           error: "Request not found",
@@ -27,19 +28,16 @@ export async function POST(
       );
     }
 
-    // 2. Run AI agent
     const agentResult = await processAgentRequest({
-      id: requestData.id,
-      name: requestData.name,
-      email: requestData.email,
-      message: requestData.message,
-      type: requestData.type,
+      name: request.name,
+      email: request.email,
+      message: request.message,
+      type: request.type,
     });
 
-    // 3. Execute action
-    const actionResult = executeAction(agentResult);
+    const now = new Date().toISOString();
 
-    // 4. Update request with AI result
+    // Save AI decision to the request
     updateRequest(id, {
       category: agentResult.category,
       priority: agentResult.priority,
@@ -47,12 +45,10 @@ export async function POST(
       decision: agentResult.decision,
       reason: agentResult.reason,
       action: agentResult.action,
-      draft_content: agentResult.draft_content ?? null,
-      status: actionResult.status,
-      updated_at: new Date().toISOString(),
+      updated_at: now,
     });
 
-    // 5. Log agent activity
+    // Agent activity
     addAgentActivity({
       id: crypto.randomUUID(),
       request_id: id,
@@ -62,22 +58,60 @@ export async function POST(
       decision: agentResult.decision,
       reason: agentResult.reason,
       action: agentResult.action,
-      status: actionResult.status,
-      created_at: new Date().toISOString(),
+      status: "executed",
+      created_at: now,
     });
 
-    // 6. Create escalation when required
+    // AUTO RESOLVE
+    if (agentResult.decision === "auto_resolve") {
+      updateRequest(id, {
+        status: "resolved",
+        updated_at: now,
+      });
+    }
+
+    // SALES FOLLOW-UP
+    if (agentResult.decision === "follow_up") {
+      updateRequest(id, {
+        status: "follow_up",
+        updated_at: now,
+      });
+
+      addLead({
+        id: crypto.randomUUID(),
+        request_id: id,
+        lead_score: Math.round(
+          agentResult.confidence * 100
+        ),
+        follow_up_status: "sent",
+        created_at: now,
+      });
+    }
+
+    // ESCALATE
     if (agentResult.decision === "escalate") {
+      updateRequest(id, {
+        status: "escalated",
+        updated_at: now,
+      });
+
       addEscalation({
         id: crypto.randomUUID(),
         request_id: id,
-        summary: requestData.message,
+        summary: request.message,
         reason: agentResult.reason,
         suggested_action:
-          agentResult.draft_content ||
-          "Human review required.",
+          "Review the request and take appropriate action.",
         status: "pending",
-        created_at: new Date().toISOString(),
+        created_at: now,
+      });
+    }
+
+    // REJECT / SPAM
+    if (agentResult.decision === "reject") {
+      updateRequest(id, {
+        status: "archived",
+        updated_at: now,
       });
     }
 
@@ -85,17 +119,19 @@ export async function POST(
       success: true,
       request_id: id,
       agent: agentResult,
-      action: actionResult,
     });
   } catch (error) {
-    console.error("Agent processing error:", error);
+    console.error(
+      "Agent processing error:",
+      error
+    );
 
     return NextResponse.json(
       {
         error:
           error instanceof Error
             ? error.message
-            : "Agent processing failed",
+            : "Failed to process request",
         code: "AGENT_PROCESSING_ERROR",
       },
       { status: 500 }

@@ -1,34 +1,25 @@
 import { NextResponse } from "next/server";
-import { createRequest } from "@/lib/store/requests";
+import { createRequest } from "@/lib/store";
 
 export async function POST(req: Request) {
   try {
     const formData = await req.formData();
+
     const file = formData.get("file");
 
     if (!(file instanceof File)) {
       return NextResponse.json(
         {
           error: "CSV file is required",
-          code: "MISSING_FILE",
+          code: "FILE_REQUIRED",
         },
         { status: 400 }
       );
     }
 
-    if (!file.name.toLowerCase().endsWith(".csv")) {
-      return NextResponse.json(
-        {
-          error: "Only CSV files are allowed",
-          code: "INVALID_FILE_TYPE",
-        },
-        { status: 400 }
-      );
-    }
+    const text = await file.text();
 
-    const csvText = await file.text();
-
-    const lines = csvText
+    const lines = text
       .split(/\r?\n/)
       .map((line) => line.trim())
       .filter(Boolean);
@@ -36,7 +27,8 @@ export async function POST(req: Request) {
     if (lines.length < 2) {
       return NextResponse.json(
         {
-          error: "CSV must contain a header and at least one data row",
+          error:
+            "CSV must contain a header and at least one row",
           code: "INVALID_CSV",
         },
         { status: 400 }
@@ -45,95 +37,62 @@ export async function POST(req: Request) {
 
     const headers = lines[0]
       .split(",")
-      .map((header) => header.trim().toLowerCase());
-
-    const requiredHeaders = ["name", "email", "message", "type"];
-
-    const hasRequiredHeaders = requiredHeaders.every((header) =>
-      headers.includes(header)
-    );
-
-    if (!hasRequiredHeaders) {
-      return NextResponse.json(
-        {
-          error: "CSV must contain name, email, message and type columns",
-          code: "INVALID_HEADERS",
-        },
-        { status: 400 }
+      .map((header) =>
+        header.trim().toLowerCase()
       );
-    }
 
-    const requests = [];
+    const created = [];
 
-    for (let i = 1; i < lines.length; i++) {
-      const values = lines[i].split(",");
+    for (const line of lines.slice(1)) {
+      const values = line
+        .split(",")
+        .map((value) =>
+          value.trim().replace(/^"|"$/g, "")
+        );
 
       const row: Record<string, string> = {};
 
       headers.forEach((header, index) => {
-        row[header] = values[index]?.trim() || "";
+        row[header] = values[index] ?? "";
       });
 
-      if (!row.name || !row.email || !row.message || !row.type) {
-        return NextResponse.json(
-          {
-            error: `Invalid data in CSV row ${i + 1}`,
-            code: "INVALID_ROW",
-          },
-          { status: 400 }
-        );
+      if (
+        !row.name ||
+        !row.email ||
+        !row.message ||
+        !row.type
+      ) {
+        continue;
       }
 
-      if (row.type !== "support" && row.type !== "sales") {
-        return NextResponse.json(
-          {
-            error: `Invalid type in CSV row ${i + 1}. Use support or sales`,
-            code: "INVALID_TYPE",
-          },
-          { status: 400 }
-        );
-      }
+      const type =
+        row.type.toLowerCase() === "sales"
+          ? "sales"
+          : "support";
 
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-      if (!emailRegex.test(row.email)) {
-        return NextResponse.json(
-          {
-            error: `Invalid email in CSV row ${i + 1}`,
-            code: "INVALID_EMAIL",
-          },
-          { status: 400 }
-        );
-      }
-
-      requests.push({
+      const request = createRequest({
         id: crypto.randomUUID(),
         name: row.name,
         email: row.email,
         message: row.message,
-        type: row.type as "support" | "sales",
-        created_at: new Date().toISOString(),
+        type,
+        status: "pending",
       });
+
+      created.push(request);
     }
 
-    for (const request of requests) {
-      await createRequest(request);
-    }
-
-    return NextResponse.json(
-      {
-        success: true,
-        count: requests.length,
-        requests,
-      },
-      { status: 201 }
-    );
+    return NextResponse.json({
+      success: true,
+      count: created.length,
+      requests: created,
+    });
   } catch (error) {
     console.error("CSV upload error:", error);
 
     return NextResponse.json(
       {
-        error: error instanceof Error ? error.message : String(error),
+        error: "Failed to process CSV",
         code: "CSV_UPLOAD_ERROR",
       },
       { status: 500 }

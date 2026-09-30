@@ -1,62 +1,23 @@
 import { NextResponse } from "next/server";
-
+import { getAnalyticsSummary } from "@/lib/store";
 
 export async function GET() {
   try {
-    
-
-    const requests = result?.data || [];
-
-    const totalRequests = requests.length;
-
-    const autoResolved = requests.filter(
-      (request: any) =>
-        request.decision === "auto_resolve"
-    ).length;
-
-    const followUps = requests.filter(
-      (request: any) =>
-        request.decision === "follow_up"
-    ).length;
-
-    const escalations = requests.filter(
-      (request: any) =>
-        request.decision === "escalate"
-    ).length;
-
-    const spamFiltered = requests.filter(
-      (request: any) =>
-        request.decision === "reject" ||
-        request.category === "spam"
-    ).length;
-
-    const resolutionRate =
-      totalRequests > 0
-        ? Math.round(
-            (autoResolved / totalRequests) * 100
-          )
-        : 0;
+    const summary = getAnalyticsSummary();
 
     return NextResponse.json({
       success: true,
-      summary: {
-        totalRequests,
-        autoResolved,
-        followUps,
-        escalations,
-        spamFiltered,
-        resolutionRate,
-      },
+      summary,
     });
   } catch (error) {
-    console.error("Analytics summary error:", error);
+    console.error(
+      "Analytics summary error:",
+      error
+    );
 
     return NextResponse.json(
       {
-        error:
-          error instanceof Error
-            ? error.message
-            : String(error),
+        error: "Failed to fetch analytics summary",
         code: "ANALYTICS_SUMMARY_ERROR",
       },
       { status: 500 }

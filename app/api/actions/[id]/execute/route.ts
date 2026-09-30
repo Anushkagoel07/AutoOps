@@ -1,11 +1,13 @@
 import { NextResponse } from "next/server";
 
-import { processAgentRequest } from "@/lib/agent/agent";
 import { executeAction } from "@/lib/agent/actions";
-
-import { createAgentActivity } from "@/lib/store/agentActivity";
-import { createEscalation } from "@/lib/store/escalations";
-import { createLead } from "@/lib/store/leads";
+import {
+  addAgentActivity,
+  addEscalation,
+  addLead,
+  getRequest,
+  updateRequest,
+} from "@/lib/store";
 
 export async function POST(
   req: Request,
@@ -14,20 +16,9 @@ export async function POST(
   try {
     const { id } = await params;
 
-    if (!id) {
-      return NextResponse.json(
-        {
-          error: "Request ID is required",
-          code: "MISSING_REQUEST_ID",
-        },
-        { status: 400 }
-      );
-    }
+    const request = getRequest(id);
 
-    
-    const requests = result?.data;
-
-    if (!requests || requests.length === 0) {
+    if (!request) {
       return NextResponse.json(
         {
           error: "Request not found",
@@ -37,81 +28,131 @@ export async function POST(
       );
     }
 
-    const request = requests[0];
+    const agentResult = {
+      category: (request.category ?? "general") as
+        | "billing"
+        | "technical"
+        | "account"
+        | "general"
+        | "spam"
+        | "qualified_lead"
+        | "potential_lead"
+        | "low_intent",
 
-    const agentResult = await processAgentRequest({
-      name: request.name,
-      email: request.email,
-      message: request.message,
-      type: request.type,
-    });
+      priority: (request.priority ?? "medium") as
+        | "low"
+        | "medium"
+        | "high"
+        | "critical",
 
-    const actionResult = executeAction(agentResult);
+      confidence: request.confidence ?? 0,
 
-    const activity = {
+      decision: (request.decision ?? "escalate") as
+        | "auto_resolve"
+        | "follow_up"
+        | "escalate"
+        | "reject",
+
+      reason:
+        request.reason ??
+        "Request requires further review.",
+
+      action: (request.action ?? "create_human_task") as
+        | "send_reply"
+        | "send_follow_up"
+        | "create_human_task"
+        | "archive",
+
+      draft_content: null,
+    };
+
+    const result = executeAction(agentResult);
+
+    const now = new Date().toISOString();
+
+    // AUTO RESOLVE
+    if (agentResult.decision === "auto_resolve") {
+      updateRequest(id, {
+        status: "resolved",
+        updated_at: now,
+      });
+    }
+
+    // SALES FOLLOW-UP
+    if (agentResult.decision === "follow_up") {
+      updateRequest(id, {
+        status: "follow_up",
+        updated_at: now,
+      });
+
+      addLead({
+        id: crypto.randomUUID(),
+        request_id: id,
+        lead_score: Math.round(
+          agentResult.confidence * 100
+        ),
+        follow_up_status: "sent",
+        created_at: now,
+      });
+    }
+
+    // ESCALATION
+    if (agentResult.decision === "escalate") {
+      updateRequest(id, {
+        status: "escalated",
+        updated_at: now,
+      });
+
+      addEscalation({
+        id: crypto.randomUUID(),
+        request_id: id,
+        summary:
+          request.message ??
+          "Customer request",
+        reason: agentResult.reason,
+        suggested_action:
+          "Review the request and take appropriate action.",
+        status: "pending",
+        created_at: now,
+      });
+    }
+
+    // REJECT / SPAM
+    if (agentResult.decision === "reject") {
+      updateRequest(id, {
+        status: "archived",
+        updated_at: now,
+      });
+    }
+
+    // AGENT ACTIVITY LOG
+    addAgentActivity({
       id: crypto.randomUUID(),
-      request_id: request.id,
+      request_id: id,
       category: agentResult.category,
       priority: agentResult.priority,
       confidence: agentResult.confidence,
       decision: agentResult.decision,
       reason: agentResult.reason,
       action: agentResult.action,
-      created_at: new Date().toISOString(),
-    };
-
-    await createAgentActivity(activity);
-
-    let escalation = null;
-    let lead = null;
-
-    if (agentResult.decision === "escalate") {
-      escalation = {
-        id: crypto.randomUUID(),
-        request_id: request.id,
-        reason: agentResult.reason,
-        priority: agentResult.priority,
-        status: "open" as const,
-        created_at: new Date().toISOString(),
-      };
-
-      await createEscalation(escalation);
-    }
-
-    if (agentResult.decision === "follow_up") {
-      const leadScore = Math.round(
-        agentResult.confidence * 100
-      );
-
-      lead = {
-        id: crypto.randomUUID(),
-        request_id: request.id,
-        lead_score: leadScore,
-        follow_up_status: "sent" as const,
-        created_at: new Date().toISOString(),
-      };
-
-      await createLead(lead);
-    }
+      status: "executed",
+      created_at: now,
+    });
 
     return NextResponse.json({
       success: true,
-      request,
-      agent: agentResult,
-      action: actionResult,
-      activity,
-      escalation,
-      lead,
+      request_id: id,
+      result,
     });
   } catch (error) {
-    console.error("Action execution error:", error);
+    console.error(
+      "Action execution error:",
+      error
+    );
 
     return NextResponse.json(
       {
-        error:
-          error instanceof Error
-            ? error.message
-            : String(error),
+        error: "Failed to execute action",
         code: "ACTION_EXECUTION_ERROR",
       },
       { status: 500 }
